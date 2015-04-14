@@ -9,17 +9,13 @@ public class HandTest {
 
     //sample hands
     String hand1 = "AS TS 3H 4S 2H";
-    String hand2 = "7D 2S 5D 3S AC";
-    String onePairHand = "2H 2D 4S 9C 7H";
-    String twoPairHand = "7D 7S 5D 5S AC";
-    String tripsHand = "2S AH 7D 7S 7C";
+    Hand highHand = new Hand("7D 2S 5D 3S AC");
+    Hand onePairHand = new Hand("2H 2D 4S 9C 7H");
+    Hand twoPairHand = new Hand("7D 7S 5D 5S AC");
+    Hand tripsHand = new Hand("2S AH 7D 7S 7C");
     Hand fullHouseHand = new Hand("2S 2H 3H 3D 3C");
-    //two pair
-    String hand4 = "2D 3S 6D 4S 5C";
-    //straight
-    String hand5 = "7D 2S 5D 3S AC";
-    String hand6 = "7D 2S 5D 3S AC";
-    String hand7 = "7D 2S 5D 3S AC";
+    Hand straightHand = new Hand("2D 3S 6D 4S 5C");
+    Hand flushHand = new Hand("3S 5S 9S 4S KS");
     @Before
     public void setUp() {
 
@@ -27,9 +23,8 @@ public class HandTest {
 
     @Test
     public void testSetCards() throws Exception {
-        Hand hand = new Hand(hand1);
-        System.out.println(hand1);
-        assertEquals(hand1.toString(), hand1);
+        System.out.println(highHand);
+        assertEquals(highHand.toString(), highHand);
 
     }
 
@@ -41,32 +36,26 @@ public class HandTest {
         //too lazy to override toEquals and Hashcode
     }
 
-
     @Test
     public void testHasPair() throws Exception {
-        Hand hand = new Hand(onePairHand);
-        assertEquals(true, hand.hasPair());
-        assertEquals(1, hand.hasPairIndexed()); //returns index of 2nd pair element
+        assertEquals(true, onePairHand.hasPair());
+        assertEquals(1, onePairHand.hasPairIndexed()); //returns index of 2nd pair element
     }
 
     @Test
     public void testHasTwoPair() throws Exception {
-        Hand hand = new Hand(twoPairHand);
-        Hand hand2 = new Hand(tripsHand);
         Hand hand3 = new Hand("3C 5D 7H 9S 9D");
-        assertEquals(true, hand.hasTwoPair());
-        assertEquals(false, hand2.hasTwoPair());
+        assertEquals(true, twoPairHand.hasTwoPair());
+        assertEquals(false, tripsHand.hasTwoPair());
         int index = hand3.hasPairIndexed();
         int twoPairResult = hand3.hasTwoPair(index);
         assertEquals(twoPairResult,-1);
     }
 
     @Test
-    public void testHasTripes() throws Exception {
-        Hand hand = new Hand("2S 5C 5H 5D 9H");
-        Hand hand1 = new Hand(twoPairHand);
-        assertEquals(hand.hasTrips(), true);
-        assertEquals(hand1.hasTrips(), false);
+    public void testHasTrips() throws Exception {
+        assertEquals(twoPairHand.hasTrips(), true);
+        assertEquals(twoPairHand.hasTrips(), false);
         assertEquals(fullHouseHand.hasTrips(), true);
     }
     @Test
