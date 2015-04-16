@@ -1,3 +1,4 @@
+import jdk.nashorn.internal.runtime.ECMAException;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,10 +63,17 @@ public class HandTest {
 
     @Test
     public void testHasTrips() throws Exception {
-        assertEquals(twoPairHand.hasTrips(), true);
         assertEquals(twoPairHand.hasTrips(), false);
         assertEquals(fullHouseHand.hasTrips(), true);
+        assertEquals(tripsHand.hasTrips(), true);
     }
+
+    @Test
+    public void testHasTripsIndexed() throws Exception {
+        int index = twoPairHand.hasPairIndexed(); //will return index of first pair
+        int resultIndex = twoPairHand.hasTwoPair(index);
+    }
+
     @Test
     public void testHasStraight() throws Exception {
 
