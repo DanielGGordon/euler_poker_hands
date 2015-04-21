@@ -1,3 +1,4 @@
+import jdk.nashorn.internal.runtime.ECMAException;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,25 +56,40 @@ public class HandTest {
     @Test
     public void testHasPair() throws Exception {
         assertEquals(true, onePairHand.hasPair());
+    }
+
+    @Test
+    public void testHasPairIndexed() throws Exception {
         assertEquals(1, onePairHand.hasPairIndexed()); //returns index of 2nd pair element
     }
 
     @Test
     public void testHasTwoPair() throws Exception {
-        Hand hand3 = new Hand("3C 5D 7H 9S 9D");
         assertEquals(true, twoPairHand.hasTwoPair());
         assertEquals(false, tripsHand.hasTwoPair());
-        int index = hand3.hasPairIndexed();
-        int twoPairResult = hand3.hasTwoPair(index);
-        assertEquals(twoPairResult,-1);
+    }
+
+    @Test
+    public void testHasTwoPairIndexed() throws Exception {
+        int index = twoPairHand.hasPairIndexed(); //will return index of first pair
+        int resultIndex = twoPairHand.hasTwoPair(index);
+        assertEquals(resultIndex,3); //last pair index at [3]
+        assertEquals(index,1);
     }
 
     @Test
     public void testHasTrips() throws Exception {
-        assertEquals(twoPairHand.hasTrips(), true);
         assertEquals(twoPairHand.hasTrips(), false);
         assertEquals(fullHouseHand.hasTrips(), true);
+        assertEquals(tripsHand.hasTrips(), true);
     }
+
+    @Test
+    public void testHasTripsIndexed() throws Exception {
+        int index = twoPairHand.hasPairIndexed(); //will return index of first pair
+        int resultIndex = twoPairHand.hasTwoPair(index);
+    }
+
     @Test
     public void testHasStraight() throws Exception {
 
