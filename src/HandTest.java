@@ -16,6 +16,7 @@ public class HandTest {
     Hand fullHouseHand = new Hand("2S 2H 3H 3D 3C");
     Hand straightHand = new Hand("2D 3S 6D 4S 5C");
     Hand flushHand = new Hand("3S 5S 9S 4S KS");
+    Hand quadsHand = new Hand("3S 3C 3H 4S 3D");
     @Before
     public void setUp() {
 
@@ -35,6 +36,21 @@ public class HandTest {
         assertEquals(hand.toString(), hand2.toString());
         //too lazy to override toEquals and Hashcode
     }
+
+    @Test
+    public void testCountMatches() throws Exception {
+        assertEquals(onePairHand.countMatches(), 1);
+        assertEquals(tripsHand.countMatches(), 2);
+        assertEquals(twoPairHand.countMatches(), 2);
+        assertEquals(highHand.countMatches(), 0);
+        assertEquals(flushHand.countMatches(), 0);
+        assertEquals(fullHouseHand.countMatches(), 3);
+        assertEquals(straightHand.countMatches(), 0);
+        assertEquals(flushHand.countMatches(), 0);
+        assertEquals(quadsHand.countMatches(), 3);
+    }
+
+
 
     @Test
     public void testHasPair() throws Exception {
@@ -70,7 +86,7 @@ public class HandTest {
 
     @Test
     public void testRankHand() throws Exception {
-
+        assertEquals(straightHand.findRank(), Rank.STRAIGHT);
     }
 
     @Test

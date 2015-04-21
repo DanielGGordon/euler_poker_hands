@@ -28,6 +28,56 @@ public class Hand {
     }
 
     /**
+     *
+     * @return the number of equal matches when comparing each card
+     * to the card next to it.
+     */
+    public int countMatches () {
+        int matchCounter = 0;
+        for (int i = 0 ; i < 4; i++) {
+            if (cards[i].getValue() == cards[i+1].getValue()) {
+                matchCounter++;
+            }
+        }
+        return matchCounter;
+    }
+
+    public Rank findRank() {
+        int numberMatches = this.countMatches();
+        if (numberMatches == 0) { //straight, flush, straight flush, royal flush or high card possible
+            boolean straight = this.hasStraight();
+            boolean flush = this.hasFlush();
+            if (straight && !flush) {
+                return Rank.STRAIGHT;
+            }
+            if (!straight && flush) {
+                return Rank.FLUSH;
+            }
+            if (straight && flush) { //royal or SF
+                return  (this.cards[4].getIntValue() == 14) ? Rank.ROYAL_FLUSH : Rank.STRAIGHT_FLUSH;
+            }
+            else {
+                return Rank.HIGH_CARD;
+            }
+
+        }
+        if (numberMatches == 1) {
+
+        }
+        if (numberMatches == 2) {
+
+        }
+        if (numberMatches == 3) {
+
+        }
+        else {
+            throw new IllegalArgumentException("countMatches() did not find correct number of matches");
+        }
+
+        return Rank.PAIR;
+    }
+
+    /**
      * All ranking methods assume a sorted state
      * There are overloaded methods to include an index
      * The index is used on the following call
@@ -135,7 +185,7 @@ public class Hand {
         return 1;
     }
 
-    public boolean hasStraight(Hand hand) {
+    public boolean hasStraight() {
         for (int i = 0; i < cards.length - 1; i++) {
             if (cards[i].getValue() + 1 != cards[i + 1].getValue()) {
                 return false;
@@ -144,7 +194,7 @@ public class Hand {
         return true;
     }
 
-    public boolean hasFlush(Hand hand) {
+    public boolean hasFlush() {
         for (int i = 0; i < cards.length - 1; i++) {
             if (cards[i].getSuit() != cards[i + 1].getSuit()) {
                 return false;
@@ -158,10 +208,10 @@ public class Hand {
         return true;
     }
 
-    public static void rankHand(Hand hand) {
-        hand.sortHand();
-        boolean haspair = hand.hasPair();
-    }
+//    public static void rankHand(Hand hand) {
+//        hand.sortHand();
+//        boolean haspair = hand.hasPair();
+//    }
 
     public static boolean bestHand (Hand hand1, Hand hand2) {
         //is hand1 better than hand2?
