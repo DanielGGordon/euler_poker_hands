@@ -1,4 +1,3 @@
-import jdk.nashorn.internal.runtime.ECMAException;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
