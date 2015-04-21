@@ -61,20 +61,19 @@ public class Hand {
             }
 
         }
-        if (numberMatches == 1) {
-
+        if (numberMatches == 1) { //can only be a pair, nothing else
+            return Rank.PAIR;
         }
-        if (numberMatches == 2) {
-
+        if (numberMatches == 2) { //Can be trips or two pair only
+            return (this.hasTrips()) ? Rank.TRIPS : Rank.TWO_PAIR;
         }
-        if (numberMatches == 3) {
-
+        if (numberMatches == 3) { //must be full house or quads
+            return (this.hasQuads()) ? Rank.FOUR_OF_A_KIND : Rank.FULL_HOUSE;
         }
         else {
             throw new IllegalArgumentException("countMatches() did not find correct number of matches");
         }
 
-        return Rank.PAIR;
     }
 
     /**
@@ -203,9 +202,14 @@ public class Hand {
         return true;
     }
 
-    public boolean hasFullHouse (Hand hand) {
+    public boolean hasQuads () {
         //assume that pair returned true and is sorted.
-        return true;
+        for (int i = 0; i < cards.length - 3; i++) {
+            if (cards[i].getValue() == cards[i + 3].getValue()) {
+                return true;
+            }
+        }
+        return false;
     }
 
 //    public static void rankHand(Hand hand) {

@@ -100,8 +100,19 @@ public class HandTest {
     }
 
     @Test
+    public void testQuads() throws Exception {
+        assertEquals(quadsHand.hasQuads(), true);
+        assertEquals(fullHouseHand.hasQuads(), false);
+    }
+
+    @Test
     public void testRankHand() throws Exception {
         assertEquals(straightHand.findRank(), Rank.STRAIGHT);
+        assertEquals(tripsHand.findRank(), Rank.TRIPS);
+        assertEquals(twoPairHand.findRank(), Rank.TWO_PAIR);
+        assertEquals(quadsHand.findRank(), Rank.FOUR_OF_A_KIND);
+        assertEquals(flushHand.findRank(), Rank.FLUSH);
+
     }
 
     @Test
