@@ -20,8 +20,8 @@ public enum Rank {
         this.value = value;
     }
 
-    private int getValue() {
-        return value;
+    public int getValue() {
+        return this.value;
     }
 
     public boolean testLogic(int num) {

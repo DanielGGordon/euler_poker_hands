@@ -1,5 +1,6 @@
 import junit.framework.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -8,7 +9,7 @@ import static org.junit.Assert.*;
 public class HandTest {
 
     //sample hands
-    String hand1 = "AS TS 3H 4S 2H";
+    Hand randomHand = new Hand ("AS TS 3H 4S 2H");
     Hand highHand = new Hand("7D 2S 5D 3S AC");
     Hand onePairHand = new Hand("2H 2D 4S 9C 7H");
     Hand twoPairHand = new Hand("7D 7S 5D 5S AC");
@@ -17,23 +18,15 @@ public class HandTest {
     Hand straightHand = new Hand("2D 3S 6D 4S 5C");
     Hand flushHand = new Hand("3S 5S 9S 4S KS");
     Hand quadsHand = new Hand("3S 3C 3H 4S 3D");
+    Hand royalFlushHand = new Hand("TC JC KC AC QC");
+    Hand straightFlushHand = new Hand("4C 7C 5C 6C 8C");
     @Before
     public void setUp() {
-
-    }
-
-    @Test
-    public void testSetCards() throws Exception {
-        System.out.println(highHand);
-        assertEquals(highHand.toString(), highHand);
-
     }
 
     @Test
     public void testSortHand() throws Exception {
-        Hand hand = new Hand(hand1);
-        Hand hand2 = new Hand("2H 3H 4S TS AS");
-        assertEquals(hand.toString(), hand2.toString());
+        assertEquals(randomHand.toString(), "2H 3H 4S TS AS"); //Why do I need the space?
         //too lazy to override toEquals and Hashcode
     }
 
@@ -48,61 +41,7 @@ public class HandTest {
         assertEquals(straightHand.countMatches(), 0);
         assertEquals(flushHand.countMatches(), 0);
         assertEquals(quadsHand.countMatches(), 3);
-    }
-
-
-
-    @Test
-    public void testHasPair() throws Exception {
-        assertEquals(true, onePairHand.hasPair());
-    }
-
-    @Test
-    public void testHasPairIndexed() throws Exception {
-        assertEquals(1, onePairHand.hasPairIndexed()); //returns index of 2nd pair element
-    }
-
-    @Test
-    public void testHasTwoPair() throws Exception {
-        assertEquals(true, twoPairHand.hasTwoPair());
-        assertEquals(false, tripsHand.hasTwoPair());
-    }
-
-    @Test
-    public void testHasTwoPairIndexed() throws Exception {
-        int index = twoPairHand.hasPairIndexed(); //will return index of first pair
-        int resultIndex = twoPairHand.hasTwoPair(index);
-        assertEquals(resultIndex,3); //last pair index at [3]
-        assertEquals(index,1);
-    }
-
-    @Test
-    public void testHasTrips() throws Exception {
-        assertEquals(twoPairHand.hasTrips(), false);
-        assertEquals(fullHouseHand.hasTrips(), true);
-        assertEquals(tripsHand.hasTrips(), true);
-    }
-
-    @Test
-    public void testHasTripsIndexed() throws Exception {
-        int index = twoPairHand.hasPairIndexed(); //will return index of first pair
-        int resultIndex = twoPairHand.hasTwoPair(index);
-    }
-
-    @Test
-    public void testHasStraight() throws Exception {
-
-    }
-
-    @Test
-    public void testHasFlush() throws Exception {
-
-    }
-
-    @Test
-    public void testQuads() throws Exception {
-        assertEquals(quadsHand.hasQuads(), true);
-        assertEquals(fullHouseHand.hasQuads(), false);
+        assertEquals(straightFlushHand.countMatches(), 0);
     }
 
     @Test
@@ -112,11 +51,31 @@ public class HandTest {
         assertEquals(twoPairHand.findRank(), Rank.TWO_PAIR);
         assertEquals(quadsHand.findRank(), Rank.FOUR_OF_A_KIND);
         assertEquals(flushHand.findRank(), Rank.FLUSH);
-
+        assertEquals(straightHand.findRank(), Rank.STRAIGHT);
+        assertEquals(highHand.findRank(), Rank.HIGH_CARD);
+        assertEquals(tripsHand.findRank(), Rank.TRIPS);
+        assertEquals(fullHouseHand.findRank(), Rank.FULL_HOUSE);
+        assertEquals(straightFlushHand.findRank(), Rank.STRAIGHT_FLUSH);
+        assertEquals(royalFlushHand.findRank(), Rank.ROYAL_FLUSH);
     }
 
     @Test
     public void testBestHand() throws Exception {
+        assertEquals(Hand.bestHand(flushHand, tripsHand), true);
+        assertEquals(Hand.bestHand(royalFlushHand, tripsHand), true);
+        assertEquals(Hand.bestHand(flushHand, royalFlushHand), false);
+        assertEquals(Hand.bestHand(twoPairHand, onePairHand), true);
+        assertEquals(Hand.bestHand(quadsHand, onePairHand), true);
+        assertEquals(Hand.bestHand(fullHouseHand, onePairHand), true);
+        assertEquals(Hand.bestHand(fullHouseHand, highHand), true);
+        assertEquals(Hand.bestHand(fullHouseHand, twoPairHand), true);
+        assertEquals(Hand.bestHand(fullHouseHand, tripsHand), true);
+        assertEquals(Hand.bestHand(fullHouseHand, straightHand), true);
+        assertEquals(Hand.bestHand(fullHouseHand, flushHand), true);
+        assertEquals(Hand.bestHand(fullHouseHand, quadsHand), false);
+        assertEquals(Hand.bestHand(fullHouseHand, fullHouseHand), false);
+        assertEquals(Hand.bestHand(fullHouseHand, straightFlushHand), false);
+        assertEquals(Hand.bestHand(fullHouseHand, royalFlushHand), false);
 
     }
 
