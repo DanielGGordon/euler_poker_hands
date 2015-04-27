@@ -24,16 +24,4 @@ public enum Rank {
         return this.value;
     }
 
-    public boolean testLogic(int num) {
-        if (FULL_HOUSE.getValue() > num) {
-            return true;
-        }
-        Rank rank = FULL_HOUSE;
-        int checker = Rank.STRAIGHT_FLUSH.getValue();
-        int checker2 = rank.getValue();
-
-        return false;
-    }
-
-
 }
