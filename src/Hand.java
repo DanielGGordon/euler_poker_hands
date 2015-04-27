@@ -100,7 +100,7 @@ public class Hand {
         int thisCard; int nextCard;
         //Need to account for case where hand = "2345A", where Ace is low card, not high.
         //if Hand is XXX5A, then the first three cards MUST be 234
-        //testing git and ssh, need a comment
+        //testing git and ssh, need a comment dd
         for (int i = 0; i < cards.length - 1; i++) {
             //compared to other methods, this one has the this/nextCard values. It is two lines longer,
             //but easier to understand
