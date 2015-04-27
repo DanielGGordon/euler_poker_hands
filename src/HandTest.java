@@ -20,6 +20,8 @@ public class HandTest {
     Hand quadsHand = new Hand("3S 3C 3H 4S 3D");
     Hand royalFlushHand = new Hand("TC JC KC AC QC");
     Hand straightFlushHand = new Hand("4C 7C 5C 6C 8C");
+    Hand aceToFiveStraight = new Hand("3C AS 2D 5C 4C");
+    Hand tenToAceStraight = new Hand("TC JH KS AD QH");
     @Before
     public void setUp() {
     }
@@ -57,6 +59,8 @@ public class HandTest {
         assertEquals(fullHouseHand.findRank(), Rank.FULL_HOUSE);
         assertEquals(straightFlushHand.findRank(), Rank.STRAIGHT_FLUSH);
         assertEquals(royalFlushHand.findRank(), Rank.ROYAL_FLUSH);
+        assertEquals(aceToFiveStraight.findRank(), Rank.STRAIGHT);
+        assertEquals(tenToAceStraight.findRank(), Rank.STRAIGHT);
     }
 
     @Test

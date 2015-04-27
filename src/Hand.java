@@ -95,10 +95,24 @@ public class Hand {
         return false;
     }
 
+
     public boolean hasStraight() {
+        int thisCard; int nextCard;
+        //Need to account for case where hand = "2345A", where Ace is low card, not high.
+        //if Hand is XXX5A, then the first three cards MUST be 234
         for (int i = 0; i < cards.length - 1; i++) {
-            if (cards[i].getIntValue() + 1 != cards[i + 1].getIntValue()) {
-                return false;
+            //compared to other methods, this one has the this/nextCard values. It is two lines longer,
+            //but easier to understand
+            thisCard = cards[i].getIntValue();
+            nextCard = cards[i + 1].getIntValue();
+            if (thisCard + 1 != nextCard) {
+                if ( !(thisCard == 5 && nextCard == 14 && i == 3)  ) {
+                    //This if statement will be run anytime there is an A2345 straight, or no straight
+                    return false;
+                }
+                else {
+                    return true;
+                }
             }
         }
         return true;
